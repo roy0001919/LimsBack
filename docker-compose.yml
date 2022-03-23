@@ -1,0 +1,60 @@
+version: "3.7"
+
+services:
+
+  crudapi:
+    build: ./crudapi
+    container_name: crudapi
+    restart: always
+    environment:
+      - APP_NAME=CRUDApi
+      - FLASK_ENV=development
+    expose:
+      - 8080
+
+  main:
+    build: ./main
+    container_name: main
+    restart: always
+    volumes:
+      - ./main/:/root
+    environment:
+      - APP_NAME=main
+      - FLASK_ENV=development
+    depends_on:
+      - postgres
+    expose:
+      - 8001
+
+  django:
+    build: ./django
+    container_name: django
+    restart: always
+    volumes:
+      - ./main/:/root
+    command: uwsgi --ini uwsgi.ini
+    expose:
+      - 8000
+
+  postgres:
+    image: postgres:10
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=roy0001919  # Change this password!
+    ports:
+      - "5432:5432"
+
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    # to appoint localhost to host machine
+    # network_mode: host
+    restart: always
+    #map ports on the host machine to container itself
+    #map HOST:CONTAINER
+    #nginx is listening on port 80 and will proxy
+    #the request to flask container @ 8080
+    ports:
+      ["80:80"]
+
