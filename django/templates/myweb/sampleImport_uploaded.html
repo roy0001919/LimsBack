@@ -1,0 +1,36 @@
+{% extends "myweb/base.html" %}
+
+{% block content %}
+<head>
+    <title>Lims系統操作後台</title>
+    <style>
+        .upload{
+            font-size:25px;
+            padding:50px 50px 50px 15%;
+        }
+        .submit{
+            width:280px;
+            height:45px;
+            font-size:25px;
+            margin:10px 0px 0px 0px;
+        }
+    </style>
+</head>
+<body>
+    <div class="upload">
+        <h3>2.啟動</h3>
+        <form method="post" action="/back_stage/sampleImportFunc/" enctype="multipart/form-data">
+            <p>請輸入機台種類：
+            <input type="radio" id="MA6000" name="ma" value="MA6000" style="WIDTH: 20px; HEIGHT: 20px" >
+            <label for="MA6000">MA6000</label>
+            <input type="radio" id="sds7500" name="ma" value="sds7500" style="WIDTH: 20px; HEIGHT: 20px" >
+            <label for="sds7500">sds7500</label><br>
+            </p>
+            {% csrf_token %}
+            <input type="submit" class="submit" value="開始轉換資料">
+        </form>
+    </div>
+    <hr/>
+</body>
+{% endblock %}
+

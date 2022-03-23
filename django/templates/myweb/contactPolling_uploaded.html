@@ -1,0 +1,24 @@
+{% extends "myweb/base.html" %}
+
+{% block content %}
+<head>
+    <title>Lims系統操作後台</title>
+    <style>
+        .start{
+            background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6zInshgDqz2B_j_lWgBv-qd53EWzzz9q1wEmdf5d5tnEFz48V&s");
+            background-repeat: repeat-x;
+            background-size: 100% 100%;
+            font-size:25px;
+            padding:50px 50px 50px 15%;
+        }
+    </style>
+</head>
+<body>
+    <div class="start">
+        <h3>2.啟動</h3>
+        <a  href="{% url "back_stage:contactPollingFunc" %}">開始匯入資料</a>
+    </div>
+    <hr/>
+</body>
+{% endblock %}
+

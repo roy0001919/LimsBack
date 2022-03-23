@@ -1,0 +1,21 @@
+{% extends "myweb/base.html" %}
+
+{% block content %}
+<head>
+    <title>Lims系統操作後台</title>
+    <style>
+        .start{
+            font-size:25px;
+            padding:50px 50px 50px 15%;
+        }
+    </style>
+</head>
+<body>
+    <div class="start">
+        <h3>2.啟動</h3>
+        <a  href="{% url "back_stage:reverseFunc" %}">開始匯入資料</a>
+    </div>
+    <hr/>
+</body>
+{% endblock %}
+

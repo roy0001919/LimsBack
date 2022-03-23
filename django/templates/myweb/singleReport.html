@@ -1,0 +1,137 @@
+{% extends "myweb/base.html" %}
+
+{% block content %}
+{% load static %}
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lims報表模板匯出後台</title>
+    <style>
+        body{
+            text-align:center;
+        }
+        input.checkbox-list, input.all{
+            width: 30px;
+            height: 30px;
+        }
+
+        .selectAll{
+            font-size:30px;
+        }
+        .selectAlldiv,table{
+            display: inline-block;
+            border: 1px solid white;
+        }
+        .submitbutton{
+            float:right;
+            margin:10px;
+        }
+        .searchbutton,table{
+            display: inline-block;
+        }
+        .submitbutton,table{
+            display:block;
+        }
+        .search{
+            float: right;
+            margin: 2% 0px 0px 0px;
+        }
+        input[type="text"]{
+            padding: 3% 0%;
+            line-height: 3%;
+            width: 350px;
+            font-size:20px;
+        }
+         input[type="submit"]{
+            width:120px;
+            height:45px;
+            font-size:25px;
+        }
+        .input.all,.selectAll, .search{
+            display: inline-block;
+        }
+        .selectAlldiv{
+            float:left;
+        }
+        .content{
+            display: inline-block;
+        }
+        tr:hover {
+            background-color: orange;
+        }
+        th{
+            font-size:20px;
+        }
+    </style>
+    <script type="text/javascript">
+<!--    # select all-->
+        $(document).ready(function() {
+            $('#select-all').click(function() {
+                var checked = this.checked;
+                $('input[type="checkbox"]').each(function() {
+                this.checked = checked;
+            });
+            })
+        });
+
+<!--    # shift select-->
+        $(document).ready(function() {
+            var $chkboxes = $('.checkbox-list');
+            var lastChecked = null;
+
+            $chkboxes.click(function(e) {
+                if (!lastChecked) {
+                    lastChecked = this;
+                    return;
+                }
+
+                if (e.shiftKey) {
+                    var start = $chkboxes.index(this);
+                    var end = $chkboxes.index(lastChecked);
+
+                    $chkboxes.slice(Math.min(start,end), Math.max(start,end)+ 1).prop('checked', lastChecked.checked);
+                }
+
+                lastChecked = this;
+            });
+        });
+    </script>
+</head>
+<body>
+<!--    <h1 align="center">Lims報表模板匯出後台</h1>-->
+    <div class="content">
+        <div class="selectAlldiv">
+            <input type="checkbox" class="all" id="select-all">
+                <p class="selectAll">Select All</p>
+        </div>
+        <form method= "post" class="search" action="/back_stage/singleReport/">
+            <input type="text" name="q" required>
+            <input type="submit" class="searchbutton" value="轉換">
+            {% csrf_token %}
+        </form>
+        <div class="table" >
+            <table style="border:0px #FFD382 groove;" cellpadding="10" border='1'>
+                <tr bgcolor="yellow">
+                    <th>Choose</th>
+                    <th>BatchID</th>
+                </tr>
+                <form name="data" method="post" action="http://192.168.11.21/back_stage/singleReport/">
+                    {% for result in data.batch %}
+                    <tr align="center">
+                        <td><input type="checkbox" class="checkbox-list" name="batchID" value="{{ result }}"></td>
+                        <td>{{ result }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% csrf_token %}
+            </table>
+            <input type="submit" class="submitbutton" value="送出"/>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+{% endblock %}

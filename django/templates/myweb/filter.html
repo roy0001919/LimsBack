@@ -1,0 +1,116 @@
+{% extends "myweb/base.html" %}
+
+{% block content %}
+{% load static %}
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lims報表模板匯出後台</title>
+    <style>
+        .logout{
+            font-size:25px;
+            float:right;
+        }
+        input.checkbox-list, input.all{
+            width: 30px;
+            height: 30px;
+        }
+        .selectAll{
+            font-size:30px;
+        }
+        .input.all,.selectAll{
+            display: inline-block;
+        }
+        .content{
+            display: inline-block;
+            margin: 30px 0px 0px 23%;
+        }
+        input.button{
+            margin: 2% 0px 0px 0px;
+            float:right;
+        }
+        tr:hover {
+            background-color: orange;
+        }
+        th{
+            font-size:20px;
+        }
+    </style>
+    <script type="text/javascript">
+<!--    # select all-->
+        $(document).ready(function() {
+            $('#select-all').click(function() {
+                var checked = this.checked;
+                $('input[type="checkbox"]').each(function() {
+                this.checked = checked;
+            });
+            })
+        });
+
+<!--    # shift select-->
+        $(document).ready(function() {
+            var $chkboxes = $('.checkbox-list');
+            var lastChecked = null;
+
+            $chkboxes.click(function(e) {
+                if (!lastChecked) {
+                    lastChecked = this;
+                    return;
+                }
+
+                if (e.shiftKey) {
+                    var start = $chkboxes.index(this);
+                    var end = $chkboxes.index(lastChecked);
+
+                    $chkboxes.slice(Math.min(start,end), Math.max(start,end)+ 1).prop('checked', lastChecked.checked);
+                }
+
+                lastChecked = this;
+            });
+        });
+    </script>
+</head>
+<body>
+<!--    <h1 align="center">Lims報表模板匯出後台</h1>-->
+    <div class="content">
+        <input type="checkbox" class="all" id="select-all"><p class="selectAll">Select All</p>
+        <div class="table" >
+            <table border="1">
+                <tr bgcolor="yellow">
+                    <th>Choose</th>
+                    <th>PID</th>
+                    <th>Name</th>
+                    <th>ContactID</th>
+                    <th>DateSampled</th>
+                    <th>SampleReceiveDate</th>
+                    <th>Type</th>
+                    <th>Sample_id</th>
+                    <th>ClientName</th>
+                </tr>
+                <form name="data" method="post" action="http://192.168.11.21/back_stage/">
+                    {% for item in data %}
+                    <tr align="center">
+                        <td><input type="checkbox" class="checkbox-list" name="{{ item.Name }}" value=["{{ item.Contact_uuid }}","{{ item.Sample_uuid }}"]></td>
+                        <td>{{ item.PID }}</td>
+                        <td>{{ item.Name }}</td>
+                        <td>{{ item.ContactID }}</td>
+                        <td>{{ item.DateSampled }}</td>
+                        <td>{{ item.SampleReceiveDate }}</td>
+                        <td>{{ item.Type }}</td>
+                        <td>{{ item.Sample_id }}</td>
+                        <td>{{ item.ClientName }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% csrf_token %}
+            </table>
+            <input type="submit" class="button" value="送出" style="width:120px;height:40px;font-size:20px;"/>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+{% endblock %}

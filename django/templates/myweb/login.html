@@ -1,0 +1,54 @@
+{% block content %}
+{% load static %}
+
+<head>
+    <style type="text/css">
+        body{
+            background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6zInshgDqz2B_j_lWgBv-qd53EWzzz9q1wEmdf5d5tnEFz48V&s");
+            background-repeat: repeat-x;
+            background-size: 100% 100%;
+            display: inline;
+            vertical-align: middle;
+        }
+        .content{
+            text-align: center;
+            background-image: url("{% static 'LiboHome-bg.jpg' %}");
+            padding: 4%;
+        }
+        .login,.register{
+            text-align: left;
+            display: inline-block;
+            margin: 40px 40px 40px 40px;
+            border: 1px solid brown;
+            width:400px;
+            padding: 0px 0px 20px 20px;
+            line-height:50px;
+            font-size:20px;
+            border-radius:5px;
+            vertical-align:top;
+            background-color: lightgray;
+        }
+        #input {
+            line-height: 3em;
+            padding: 0px 0px 0px 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1 align="center">Lims報表模板匯出後台</h1>
+    <div class="content">
+        <div class="login">
+            <h2>登入</h2>
+            <form action="." method="post">
+                {{ form.as_p }}
+        <!--        <p>使用者名稱 或 電子郵件 *</p>-->
+        <!--        <input type="input" id="input" size="50"/><br/>-->
+        <!--        <p>密碼 *</p>-->
+        <!--        <input type="input" id="input" size="50"/><br/><br/>-->
+                {% csrf_token %}
+                <p><input type="submit" class="button" value="登入"></p>
+            </form>
+        </div>
+    </div>
+</body>
+{% endblock %}

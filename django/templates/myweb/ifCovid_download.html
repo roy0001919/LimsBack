@@ -1,0 +1,21 @@
+{% extends "myweb/base.html" %}
+
+{% block content %}
+<head>
+    <title>Lims系統操作後台</title>
+    <style>
+        .start{
+            font-size:25px;
+            padding:50px 50px 50px 15%;
+        }
+    </style>
+</head>
+<body>
+    <div class="start">
+        <h3>3.下載檔案</h3>
+        <a  href="{% url "back_stage:ifCovidDownload" %}">下載檔案</a>
+    </div>
+    <hr/>
+</body>
+{% endblock %}
+

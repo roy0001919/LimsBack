@@ -1,0 +1,200 @@
+<html>
+<head>
+    <style>
+        .menu{
+            background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZ54xL9JVRpFuRDUis1eBr_NHdDHcAeax1IwPDy6aW8B0c128&s");
+            background-repeat: repeat-x;
+            background-size: 40%;
+            background-position: 0% 100%;
+        }
+
+        .dropbtn {
+          background-color: brown;
+          color: orange;
+          padding: 16px;
+          font-size: 25px;
+          border: none;
+          cursor: pointer;
+        }
+
+        .dropdown {
+          position: relative;
+          display: inline-block;
+        }
+
+        .dropdown-content {
+          display: none;
+          position: absolute;
+          background-color: #f9f9f9;
+          min-width: 160px;
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          z-index: 1;
+        }
+
+        .dropdown-content a {
+          color: black;
+          padding: 12px 16px;
+          text-decoration: none;
+          display: block;
+        }
+
+        .dropdown-content a:hover {background-color: #FFBF00}
+
+        .dropdown:hover .dropdown-content {
+          display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+          background-color: #3e8e41;
+        }
+        ul {
+           list-style-type: none;
+        }
+        li {
+           height: 65px;
+           float: left;
+           margin-right: 0px;
+           border-right: 1px solid #aaa;
+           padding: 0 20px;
+        }
+        li:last-child {
+           border-right: none;
+        }
+        li a {
+           text-decoration: none;
+           color: orange;
+           text-transform: uppercase;
+           -webkit-transition: all 0.5s ease;
+           -moz-transition: all 0.5s ease;
+           -o-transition: all 0.5s ease;
+           -ms-transition: all 0.5s ease;
+           transition: all 0.5s ease;
+        }
+        li a:hover {
+           color: #666;
+        }
+
+        .title,.selection{
+            display: inline-block;
+            display:flex;
+            justify-content: center;
+        }
+
+        .selection{
+            font-size: 25px;
+            letter-spacing: 10px;
+        }
+
+        .bar {
+          width: 30px;
+          height: 5px;
+          background-color: black;
+          margin: 6px 0;
+        }
+        .menu,.title{
+          text-align: center
+        }
+        .button,.title{
+          display: inline-block;
+          vertical-align: middle;
+        }
+        .button{
+          float:left;
+        }
+        .logout{
+            font-size:25px;
+            float:right;
+        }
+    </style>
+    <script type="text/javascript">
+        function Show_Hidden(obj)
+        {
+        if(obj.style.display=="block")
+        {
+        obj.style.display='none';
+        }
+        else
+        {
+        obj.style.display='block';
+        }
+        }
+        window.onload=function()
+        {
+        var olink=document.getElementById("link");
+        var odiv=document.getElementById("thediv");
+        olink.onclick=function()
+        {
+        Show_Hidden(odiv);
+        return false;
+        }
+        }
+    </script>
+</head>
+<body>
+    {% block nav %}
+    <div class="logout">
+        {{ request.user.username }}您好,
+        <a  href="{% url "back_stage:logout" %}">登出</a>
+    </div>
+    <div class='menu'>
+        <div class='button'>
+            <a href="#" id="link">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar"
+                        style = "background-color: transparent; border: 0;"/>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </button>
+            </a>
+        </div>
+        <div class='title'>
+            <h1>Lims系統操作後台</h1>
+        </div>
+        <div class='selection'>
+            <div id="thediv" style="display:block">
+                <ul id="nav">
+<!--                    <li><a href="{% url "back_stage:reserveSample" %}">台灣客戶匯入</a></li>-->
+                    <li>
+                        <div class="dropdown">
+                        <button class="dropbtn">單位人員未知</button>
+                        <div class="dropdown-content">
+                            <a href="{% url "back_stage:generateBarcode" %}">預產生條碼</a>
+                            <a href="{% url "back_stage:update_barcode_contact_info" %}">回填客戶資料</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                        <button class="dropbtn">單位人員已知</button>
+                        <div class="dropdown-content">
+                            <a href="{% url "back_stage:nonreserveSample" %}">顧客資料匯入</a>
+                            <a href="{% url "back_stage:contactPolling" %}">PID對應條碼</a>
+                        </div>
+                    </li>
+                    <li><button class="dropbtn"><a href="{% url "back_stage:update_sample_result" %}">提取表上傳</a></button></li>
+                    <li>
+                        <div class="dropdown">
+                        <button class="dropbtn">機台模板匯出</button>
+                        <div class="dropdown-content">
+                            <a href="{% url "back_stage:single_report" %}">單連模板匯出</a>
+<!--                            <a href="{% url "back_stage:muti_report" %}">多連模板匯出</a>-->
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                        <button class="dropbtn">報表模板匯出</button>
+                        <div class="dropdown-content">
+                            <a href="{% url "back_stage:report" %}">報表模板匯出</a>
+                        </div>
+                    </li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
+
+

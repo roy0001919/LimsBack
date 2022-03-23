@@ -1,0 +1,30 @@
+<html>
+<head>
+    <title>Lims系統操作後台</title>
+    <style>
+        .upload{
+            font-size:25px;
+            padding:50px 50px 50px 15%;
+        }
+        .submit{
+            width:280px;
+            height:45px;
+            font-size:25px;
+            margin:10px 0px 0px 0px;
+        }
+    </style>
+</head>
+<body>
+    <div class="upload">
+        <h3>1.檔案上傳</h3>
+        <form method="post" action="/back_stage/file_upload/" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ forms }}<br>
+            <input type="submit" class="submit" value="提交">
+        </form>
+    </div>
+    <hr/>
+</body>
+</html>
+{% block content %}
+{% endblock %}
