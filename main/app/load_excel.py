@@ -70,7 +70,7 @@ def create_nocontact_barcode(**barcode_dict):
         for i in range(0, number):
             url = 'http://192.168.11.21/api/sample/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid,
                                                                                     "fb874dfd7ef3481aa6b91f01a38e137c",
-                                                                                    '8d375761b34e42b9944b121c9295ed63',
+                                                                                    '72ee86eeed68455fbcbf05ce7d7e1d8a',
                                                                                     None,
                                                                                     None, True,
                                                                                     None)
@@ -91,7 +91,7 @@ def create_nocontact_barcode(**barcode_dict):
         for i in range(0, number):
             url = 'http://192.168.11.21/api/sample/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid,
                                                                                     "fb874dfd7ef3481aa6b91f01a38e137c",
-                                                                                    '8d375761b34e42b9944b121c9295ed63',
+                                                                                    '72ee86eeed68455fbcbf05ce7d7e1d8a',
                                                                                     None,
                                                                                     None, True,
                                                                                     None)
@@ -292,7 +292,7 @@ def update_contact_polling_info():
                 df_export.PID == df_export.loc[i].PID, ['Contact_uuid']].values.ravel().tolist()
             url = 'http://192.168.11.21/api/sample/{}/{}/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid,
                                                                                     "b54dcd097d1844578dd333219f4b0ff6",
-                                                                                    "8d375761b34e42b9944b121c9295ed63",
+                                                                                    "72ee86eeed68455fbcbf05ce7d7e1d8a",
                                                                                     None,
                                                                                     None, type,
                                                                                     PID, contact_uuid_polling_list,
@@ -740,7 +740,7 @@ def reserve_sample():
         client_uuid = df_export.loc[i, "Client_uuid"]
         contact_uuid = df_export.loc[i, "Contact_uuid"]
         url = 'http://192.168.11.21/api/sample/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contact_uuid,
-                                                                             '8d375761b34e42b9944b121c9295ed63', None,
+                                                                             '72ee86eeed68455fbcbf05ce7d7e1d8a', None,
                                                                              None, None,
                                                                              None)
         print(url)
@@ -860,7 +860,7 @@ def reserve_sample_report():
         client_uuid = df_export.loc[i, "Client_uuid"]
         contact_uuid = df_export.loc[i, "Contact_uuid"]
         url = 'http://192.168.11.21/api/sample/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contact_uuid,
-                                                                             '8d375761b34e42b9944b121c9295ed63', None,
+                                                                             '72ee86eeed68455fbcbf05ce7d7e1d8a', None,
                                                                              None, None,
                                                                              None)
         print(url)
@@ -987,7 +987,7 @@ def report_sample_chao():
     #     client_uuid = df_export.loc[i, "Client_uuid"]
     #     contact_uuid = df_export.loc[i, "Contact_uuid"]
     #     url = 'http://192.168.11.21/api/sample/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contact_uuid,
-    #                                                                          '8d375761b34e42b9944b121c9295ed63', None,
+    #                                                                          '72ee86eeed68455fbcbf05ce7d7e1d8a', None,
     #                                                                          None, None,
     #                                                                          None)
     #     print(url)
@@ -1137,7 +1137,7 @@ def nonreserve_sample():
         print(client_uuid)
         print(contact_uuid)
         url = 'http://192.168.11.21/api/sample/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contact_uuid,
-                                                                             '8d375761b34e42b9944b121c9295ed63', None,
+                                                                             '72ee86eeed68455fbcbf05ce7d7e1d8a', None,
                                                                              None, None,
                                                                              None)
         print(url)
@@ -1290,7 +1290,7 @@ def nonreserve_sample_report():
         print(client_uuid)
         print(contact_uuid)
         url = 'http://192.168.11.21/api/sample/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contact_uuid,
-                                                                             '8d375761b34e42b9944b121c9295ed63', None,
+                                                                             '72ee86eeed68455fbcbf05ce7d7e1d8a', None,
                                                                              None, None,
                                                                              None)
         print(url)
@@ -1450,7 +1450,7 @@ def cust_data_polling():
         print(contact_uuid)
         contact_uuid_polling_list = df_export.loc[df_export.PID == df_export.loc[i].PID, ['Contact_uuid']].values.ravel().tolist()
         url = 'http://192.168.11.21/api/sample/{}/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, "b54dcd097d1844578dd333219f4b0ff6",
-                                                                             '8d375761b34e42b9944b121c9295ed63', None,
+                                                                             '72ee86eeed68455fbcbf05ce7d7e1d8a', None,
                                                                              None, True,
                                                                              None, contact_uuid_polling_list)
         print(url)
@@ -2194,7 +2194,7 @@ def create_sample(df_export):
         client_uuid = df_export.loc[i, "Client_uuid"]
         contact_uuid = df_export.loc[i, "Contact_uuid"]
         url = 'http://192.168.11.21/api/sample/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contact_uuid,
-                                                                             '8d375761b34e42b9944b121c9295ed63', None,
+                                                                             '72ee86eeed68455fbcbf05ce7d7e1d8a', None,
                                                                              None, None,
                                                                              None)
         print(url)
