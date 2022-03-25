@@ -186,7 +186,7 @@ def muti_report(request):
         result = requests.post(url, json=batch_dict)
         print(result.json())
         batch_ID = batch_list[0]
-        file = open('C:/Users/roy.lo/PycharmProjects/Lims_Work/main/{}_muti.csv'.format(batch_ID), 'rb')
+        file = open('/root/{}_muti.csv'.format(batch_ID), 'rb')
         print(batch_ID)
         response = FileResponse(file)
         response["Content-Type"] = "application/octet-stream"  # 設定頭資訊，告訴瀏覽器這是個檔案

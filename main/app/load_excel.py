@@ -594,7 +594,7 @@ def muti_report(**batchID_dict):
                 df_recursive_H)
             df_export = df_export[["Well", "PID"]]
             print(df_export)
-            df_export.to_csv("{}_muti.csv".format(batchID), index=False)
+            df_export.to_csv("/root/{}_muti.csv".format(batchID), index=False)
         return batchID_dict
     except Exception as e:
         print(e)
