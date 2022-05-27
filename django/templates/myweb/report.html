@@ -108,9 +108,9 @@
                 <p class="selectAll">Select All</p>
         </div>
         <form method= "post" class="search" action="/back_stage/search/">
+            {% csrf_token %}
             <input type="text" name="q" required>
             <input type="submit" class="searchbutton" value="查詢">
-            {% csrf_token %}
         </form>
         <div class="table" >
             <table style="border:0px #FFD382 groove;" cellpadding="10" border='1'>
@@ -125,7 +125,7 @@
                     <th>Sample_id</th>
                     <th>ClientName</th>
                 </tr>
-                <form name="data" method="post" action="http://192.168.11.21/back_stage/">
+                <form name="data" method="post" action="http://172.20.10.5/back_stage/">
                     {% for item in data %}
                     <tr align="center">
                         <td><input type="checkbox" class="checkbox-list" name="{{ item.Name }}" value=["{{ item.Contact_uuid }}","{{ item.Sample_uuid }}"]></td>

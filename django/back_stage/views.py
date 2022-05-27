@@ -22,7 +22,7 @@ def generateBarcode(request):
             "clientName": cilentName,
             "number": number
         }
-        url = "http://192.168.11.21/createNocontactBarcode"
+        url = "http://172.20.10.5/createNocontactBarcode"
         result = requests.post(url, json=data_dict)
         print(result.json())
         return render(request, 'myweb/generateBarcode.html', {
@@ -50,7 +50,7 @@ def nonreserveSample(request):
 
 @login_required
 def nonreserveFunc(request):
-    url = "http://192.168.11.21/importCustdata"
+    url = "http://172.20.10.5/importCustdata"
     result = requests.get(url)
     print(result.text)
     return render(request, 'myweb/submit.html', {
@@ -78,7 +78,7 @@ def contactPolling(request):
 
 @login_required
 def contactPollingFunc(request):
-    url = "http://192.168.11.21/updateContactPollingInfo"
+    url = "http://172.20.10.5/updateContactPollingInfo"
     result = requests.get(url)
     print(result.text)
     return render(request, 'myweb/submit.html', {
@@ -106,7 +106,7 @@ def update_barcode_contact_info(request):
 
 @login_required
 def update_barcode_contact_infoFunc(request):
-    url = "http://192.168.11.21/updateBarcodeContactInfo"
+    url = "http://172.20.10.5/updateBarcodeContactInfo"
     result = requests.get(url)
     print(result.text)
     return render(request, 'myweb/submit.html', {
@@ -134,7 +134,7 @@ def update_sample_result(request):
 
 @login_required
 def update_sample_resultFunc(request):
-    url = "http://192.168.11.21/updateSampleResult"
+    url = "http://172.20.10.5/updateSampleResult"
     result = requests.get(url)
     print(result.text)
     return render(request, 'myweb/submit.html', {
@@ -145,7 +145,7 @@ def update_sample_resultFunc(request):
 @login_required
 def single_report(request):
     if request.method == 'GET':
-        url = "http://192.168.11.21/singleBatchList"
+        url = "http://172.20.10.5/singleBatchList"
         result = requests.get(url)
         return render(request, 'myweb/singleReport.html', {
             "data": result.json()
@@ -153,7 +153,7 @@ def single_report(request):
     elif request.method == 'POST':
         batch_list = list(request.POST.lists())[0][1]
         print(batch_list)
-        url = "http://192.168.11.21/singleReport"
+        url = "http://172.20.10.5/singleReport"
         batch_dict = {}
         batch_dict["batch"] = batch_list
         print(batch_dict)
@@ -171,7 +171,7 @@ def single_report(request):
 @login_required
 def muti_report(request):
     if request.method == 'GET':
-        url = "http://192.168.11.21/singleBatchList"
+        url = "http://172.20.10.5/singleBatchList"
         result = requests.get(url)
         return render(request, 'myweb/mutiReport.html', {
             "data": result.json()
@@ -179,7 +179,7 @@ def muti_report(request):
     elif request.method == 'POST':
         batch_list = list(request.POST.lists())[0][1]
         print(batch_list)
-        url = "http://192.168.11.21/mutiReport"
+        url = "http://172.20.10.5/mutiReport"
         batch_dict = {}
         batch_dict["batch"] = batch_list
         print(batch_dict)
@@ -209,7 +209,7 @@ def first_type_report(request):
             data_dict.update({key: value})
         data_dict.pop('csrfmiddlewaretoken')
         print(data_dict)
-        url = "http://192.168.11.21/secondtype_report_post"
+        url = "http://172.20.10.5/secondtype_report_post"
         result = requests.post(url, json=data_dict)
         print(result.text)
         file = open('/root/report2.xlsx', 'rb')
@@ -326,7 +326,7 @@ def sampleImport(request):
 @login_required
 def sampleImportFunc(request):
     print(request.POST["ma"])
-    # url = "http://192.168.11.21/reserve_sample_report"
+    # url = "http://172.20.10.5/reserve_sample_report"
     # result = requests.get(url)
     # print(result.text)
     # return render(request, 'myweb/submit.html', {
@@ -354,7 +354,7 @@ def ifCovid(request):
 @login_required
 def reserveFunc(request):
     pass
-    # url = "http://192.168.11.21/nonreserveSample"
+    # url = "http://172.20.10.5/nonreserveSample"
     # result = requests.get(url)
     # print(result.text)
     # return render(request, 'myweb/submit.html', {
@@ -365,10 +365,10 @@ def reserveFunc(request):
 
 @login_required
 def batchGraphFunc(request):
-    url = "http://192.168.11.21/batch_well_Xiamen"
+    url = "http://172.20.10.5/batch_well_Xiamen"
     result = requests.get(url)
     print(result.text)
-    url2 = "http://192.168.11.21/sample_update_new"
+    url2 = "http://172.20.10.5/sample_update_new"
     result = requests.get(url2)
     print(result.text)
     file = open('/root/batch_graph.xlsx', 'rb')
@@ -384,7 +384,7 @@ def batchGraphFunc(request):
 @login_required
 def queryReport(request):
     batch_ID = request.POST["q"]
-    url = "http://192.168.11.21/singleReport"
+    url = "http://172.20.10.5/singleReport"
     batch_dict = {}
     batch_dict["batch"] = batch_ID
     print(batch_dict)
@@ -404,7 +404,7 @@ def ifCovidFunc(request):
     if request.POST["ma"] == 'MA6000':
         pass
     elif request.POST["ma"] == 'sds7500':
-        url = "http://192.168.11.21/if_covid_sds7500"
+        url = "http://172.20.10.5/if_covid_sds7500"
         result = requests.get(url)
         print(result.text)
         return render(request, 'myweb/ifCovid_download.html', {

@@ -8,7 +8,7 @@ headers = {'Content-Type': 'application/json'}
 class IDfilter:
 
     def read(self,uid):
-        url = "http://3.139.254.61:8080/senaite/@@API/senaite/v1/{}".format(uid)
+        url = "http://172.20.10.5:8080/senaite/@@API/senaite/v1/{}".format(uid)
         result = requests.get(url, cookies=reslogin.cookies, headers=headers)
         return result.json()
 
@@ -16,17 +16,17 @@ class IDfilter:
 class Clients:
 
     def create(self,data):
-        url = "http://3.139.254.61:8080/senaite/@@API/senaite/v1/create"
+        url = "http://172.20.10.5:8080/senaite/@@API/senaite/v1/create"
         result = requests.post(url, cookies=reslogin.cookies, headers=headers, data=data)
         return result.json()
 
     def read(self):
-        url = "http://3.139.254.61:8080/senaite/@@API/senaite/v1/client"
+        url = "http://172.20.10.5:8080/senaite/@@API/senaite/v1/client"
         result = requests.get(url, cookies=reslogin.cookies,headers=headers)
         return result.json()
 
     def update(self,data):
-        url = "http://3.139.254.61:8080/senaite/@@API/senaite/v1/update"
+        url = "http://172.20.10.5:8080/senaite/@@API/senaite/v1/update"
         result = requests.post(url, cookies=reslogin.cookies, headers=headers, data=data)
         return str(result)
 
@@ -36,24 +36,24 @@ class Clients:
 
 class Contacts:
     def create(self, client_uuid, data):
-        url = "http://3.139.254.61:8080/senaite/@@API/senaite/v1/create/{}".format(client_uuid)
+        url = "http://172.20.10.5:8080/senaite/@@API/senaite/v1/create/{}".format(client_uuid)
         print(url)
         result = requests.post(url, cookies=reslogin.cookies, headers=headers, data=data)
         return result.json()
 
     def createReport(self, uid, data):
-        url = "http://3.139.254.61:8080/senaite/@@API/senaite/v1/create/{}".format(uid)
+        url = "http://172.20.10.5:8080/senaite/@@API/senaite/v1/create/{}".format(uid)
         print(url)
         result = requests.post(url, cookies=reslogin.cookies, headers=headers, data=data)
         return result.json()
 
     def read(self):
-        url = "http://3.139.254.61:8080/senaite/@@API/senaite/v1/contact"
+        url = "http://172.20.10.5:8080/senaite/@@API/senaite/v1/contact"
         result = requests.get(url, cookies=reslogin.cookies,headers=headers)
         return result.json()
 
     def update(self,data):
-        url = "http://3.139.254.61:8080/senaite/@@API/senaite/v1/update"
+        url = "http://172.20.10.5:8080/senaite/@@API/senaite/v1/update"
         result = requests.post(url, cookies=reslogin.cookies, headers=headers, data=data)
         return str(result)
 
@@ -64,18 +64,18 @@ class Contacts:
 class Samples:
 
     def create(self, client_uuid, data):
-        url = "http://3.139.254.61:8080/senaite/@@API/senaite/v1/AnalysisRequest/create/{}".format(client_uuid)
+        url = "http://172.20.10.5:8080/senaite/@@API/senaite/v1/AnalysisRequest/create/{}".format(client_uuid)
         result = requests.post(url, cookies=reslogin.cookies, headers=headers, data=data)
         return result.json()
 
     def read(self):
         print("read samples")
-        url = "http://3.139.254.61:8080/senaite/@@API/senaite/v1/analysisrequest"
+        url = "http://172.20.10.5:8080/senaite/@@API/senaite/v1/analysisrequest"
         result = requests.get(url, cookies=reslogin.cookies, headers=headers)
         return result.json()
 
     def update(self, data):
-        url = "http://3.139.254.61:8080/senaite/@@API/senaite/v1/update"
+        url = "http://172.20.10.5:8080/senaite/@@API/senaite/v1/update"
         result = requests.post(url, cookies=reslogin.cookies, headers=headers, data=data)
         return result.json()
 
@@ -86,18 +86,18 @@ class Samples:
 class Batches:
 
     def create(self, client_uuid, data):
-        url = "http://3.139.254.61:8080/senaite/@@API/senaite/v1/batch/create/{}".format(client_uuid)
+        url = "http://172.20.10.5:8080/senaite/@@API/senaite/v1/batch/create/{}".format(client_uuid)
         result = requests.post(url, cookies=reslogin.cookies, headers=headers, data=data)
         return result.json()
 
     def read(self):
         print("read batches")
-        url = "http://3.139.254.61:8080/senaite/@@API/senaite/v1/batch"
+        url = "http://172.20.10.5:8080/senaite/@@API/senaite/v1/batch"
         result = requests.get(url, cookies=reslogin.cookies, headers=headers)
         return result.json()
 
     def update(self, data):
-        url = "http://3.139.254.61:8080/senaite/@@API/senaite/v1/update"
+        url = "http://172.20.10.5:8080/senaite/@@API/senaite/v1/update"
         result = requests.post(url, cookies=reslogin.cookies, headers=headers, data=data)
         return result.json()
 
@@ -108,20 +108,20 @@ class Batches:
 class Worksheets:
 
     def create(worksheetID, data):
-        url = "http://3.139.254.61:8080/senaite/@@API/senaite/v1/worksheet/create/{}".format(worksheetID)
+        url = "http://172.20.10.5:8080/senaite/@@API/senaite/v1/worksheet/create/{}".format(worksheetID)
         result = requests.post(url, cookies=reslogin.cookies, headers=headers, data=data)
         print(result)
 
     def read():
         print("read worksheets")
-        url = "http://3.139.254.61:8080/senaite/@@API/senaite/v1/worksheet"
+        url = "http://172.20.10.5:8080/senaite/@@API/senaite/v1/worksheet"
         result = requests.get(url, cookies=reslogin.cookies,headers=headers)
         print(result.text)
 
     def update(self, data):
         pass
         
-        # url = "http://3.139.254.61:8080/senaite/@@API/senaite/v1/update"
+        # url = "http://172.20.10.5:8080/senaite/@@API/senaite/v1/update"
         # result = requests.post(url, cookies=reslogin.cookies, headers=headers, data=data)
         # print(result)
 
@@ -132,18 +132,18 @@ class Worksheets:
 class ReferenceSamples:
 
     def create(ReferencesampleID, data):
-        url = "http://3.139.254.61:8080/senaite/@@API/senaite/v1/referencesample/create/{}".format(ReferencesampleID)
+        url = "http://172.20.10.5:8080/senaite/@@API/senaite/v1/referencesample/create/{}".format(ReferencesampleID)
         result = requests.post(url, cookies=reslogin.cookies, headers=headers, data=data)
         print(result)
 
     def read():
         print("read referencesamples")
-        url = "http://3.139.254.61:8080/senaite/@@API/senaite/v1/referencesample"
+        url = "http://172.20.10.5:8080/senaite/@@API/senaite/v1/referencesample"
         result = requests.get(url, cookies=reslogin.cookies,headers=headers)
         print(result.text)
 
     def update(data):
-        url = "http://3.139.254.61:8080/senaite/@@API/senaite/v1/update"
+        url = "http://172.20.10.5:8080/senaite/@@API/senaite/v1/update"
         result = requests.post(url, cookies=reslogin.cookies, headers=headers, data=data)
         print(result)
 
@@ -154,18 +154,18 @@ class ReferenceSamples:
 class Methods:
 
     def create(methodID, data):
-        url = "http://3.139.254.61:8080/senaite/@@API/senaite/v1/method/create/{}".format(methodID)
+        url = "http://172.20.10.5:8080/senaite/@@API/senaite/v1/method/create/{}".format(methodID)
         result = requests.post(url, cookies=reslogin.cookies, headers=headers, data=data)
         print(result)
 
     def read():
         print("read methods")
-        url = "http://3.139.254.61:8080/senaite/@@API/senaite/v1/method"
+        url = "http://172.20.10.5:8080/senaite/@@API/senaite/v1/method"
         result = requests.get(url, cookies=reslogin.cookies,headers=headers)
         print(result.text)
 
     def update(data):
-        url = "http://3.139.254.61:8080/senaite/@@API/senaite/v1/update"
+        url = "http://172.20.10.5:8080/senaite/@@API/senaite/v1/update"
         result = requests.post(url, cookies=reslogin.cookies, headers=headers, data=data)
         print(result)
 

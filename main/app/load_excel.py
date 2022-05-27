@@ -13,7 +13,7 @@ headers = {'Content-Type': 'application/json'}
 myDBname = "postgres"
 my_uesrname = "postgres"
 my_pwd = "roy0001919"
-my_host = "192.168.11.21"
+my_host = "172.20.10.5"
 my_port = "5432"
 my_tbname_1 = "reserve_sample"
 my_tbname_2 = "nonreserve_sample"
@@ -46,7 +46,7 @@ engine = create_engine('postgresql://'+my_uesrname+':'+my_pwd+'@'+my_host+':'+my
 
 
 def login():
-    loginurl = "http://3.139.254.61:8080/senaite/@@API/senaite/v1/login?__ac_name=admin&__ac_password=admin"
+    loginurl = "http://172.20.10.5:8080/senaite/@@API/senaite/v1/login?__ac_name=admin&__ac_password=admin"
     reslogin = requests.get(loginurl)
     return reslogin
 
@@ -68,9 +68,9 @@ def create_nocontact_barcode(**barcode_dict):
     if clientName in df_id.ClientName.values.tolist():
         client_uuid = df_id.loc[df_id.ClientName == clientName, 'Client_uuid'].values[0]
         for i in range(0, number):
-            url = 'http://192.168.11.21/api/sample/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid,
-                                                                                    "fb874dfd7ef3481aa6b91f01a38e137c",
-                                                                                    '72ee86eeed68455fbcbf05ce7d7e1d8a',
+            url = 'http://172.20.10.5/api/sample/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid,
+                                                                                    "a29d4d6b92fc47a19fc16b8ebc85166f",
+                                                                                    'da509dcb5c6a4ea8a0774c6f83ece70f',
                                                                                     None,
                                                                                     None, True,
                                                                                     None)
@@ -82,16 +82,16 @@ def create_nocontact_barcode(**barcode_dict):
             client_uuid_list.append(result.json()["items"][0]["parent_uid"])
             clientName_list.append(clientName)
     else:
-        url = 'http://192.168.11.21/api/client/{}/{}'.format(clientName, None)
+        url = 'http://172.20.10.5/api/client/{}/{}'.format(clientName, None)
         print(url)
         result = requests.post(url, cookies=reslogin.cookies, headers=headers)
         print(result.json())
         # clientName = result.json()["items"][0]["Name"]
         client_uuid = result.json()["items"][0]["uid"]
         for i in range(0, number):
-            url = 'http://192.168.11.21/api/sample/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid,
-                                                                                    "fb874dfd7ef3481aa6b91f01a38e137c",
-                                                                                    '72ee86eeed68455fbcbf05ce7d7e1d8a',
+            url = 'http://172.20.10.5/api/sample/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid,
+                                                                                    "a29d4d6b92fc47a19fc16b8ebc85166f",
+                                                                                    'da509dcb5c6a4ea8a0774c6f83ece70f',
                                                                                     None,
                                                                                     None, True,
                                                                                     None)
@@ -139,7 +139,7 @@ def import_custdata():
             # not exsit and not duplicate
             if df_checkID.loc[i] == False and i in df_import.ClientName.drop_duplicates().index.tolist():
                 import_dict = df_import.loc[i].to_dict()
-                url = 'http://192.168.11.21/api/client/{}/{}'.format(import_dict["ClientName"], None)
+                url = 'http://172.20.10.5/api/client/{}/{}'.format(import_dict["ClientName"], None)
                 print(url)
                 result = requests.post(url, cookies=reslogin.cookies, headers=headers)
                 if str(result.status_code) == "200":
@@ -161,7 +161,7 @@ def import_custdata():
                     client_uuid = df_id.Client_uuid[df_id.ClientName == clientName].tolist()[0]
                     other = str(import_dict["ENName"]) + ':' + str(import_dict["remark"])
                     # email = import_dict["Email"]
-                    url = 'http://192.168.11.21/api/contactReport/{}/{}/{}/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid,
+                    url = 'http://172.20.10.5/api/contactReport/{}/{}/{}/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid,
                                                                                                       contactID,
                                                                                                       name, sex, age,
                                                                                                       birthday,
@@ -222,7 +222,7 @@ def import_custdata():
                     clientName = value
             other = str(data["ENName"]) + ':' + str(data["remark"])
 
-            url = 'http://192.168.11.21/api/contactReport/{}/{}/{}/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contactID,
+            url = 'http://172.20.10.5/api/contactReport/{}/{}/{}/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contactID,
                                                                                               name, sex, age, birthday,
                                                                                               clientName, phone, other,
                                                                                                  clientName)
@@ -290,9 +290,9 @@ def update_contact_polling_info():
             print(contact_uuid)
             contact_uuid_polling_list = df_export.loc[
                 df_export.PID == df_export.loc[i].PID, ['Contact_uuid']].values.ravel().tolist()
-            url = 'http://192.168.11.21/api/sample/{}/{}/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid,
+            url = 'http://172.20.10.5/api/sample/{}/{}/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid,
                                                                                     "b54dcd097d1844578dd333219f4b0ff6",
-                                                                                    "72ee86eeed68455fbcbf05ce7d7e1d8a",
+                                                                                    "da509dcb5c6a4ea8a0774c6f83ece70f",
                                                                                     None,
                                                                                     None, type,
                                                                                     PID, contact_uuid_polling_list,
@@ -356,7 +356,7 @@ def update_barcode_contact_info():
             phone = df_export.loc[i, "Phone"]
             other = str(df_export.loc[i, "ENName"]) + ':' + str(df_export.loc[i, "remark"])
             ClientTo = df_export.loc[i, "ClientTo"]
-            url = 'http://192.168.11.21/api/contactReport/{}/{}/{}/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contactID,
+            url = 'http://172.20.10.5/api/contactReport/{}/{}/{}/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contactID,
                                                                                                name, sex, age, birthday,
                                                                                                clientFrom, phone, other,
                                                                                                  ClientTo)
@@ -384,7 +384,7 @@ def update_barcode_contact_info():
             # sample_type_uuid = df_export.loc[i, "SampleType"]
             EnvironmentalConditions = str(df_export.loc[i, "DateSampled"]) + ',' + str(df_export.loc[i, "SampleReceiveDate"])
             print(contact_uuid_polling_list)
-            url = 'http://192.168.11.21/api/sample/{}/{}/{}/{}/{}/{}/{}/{}'.format(sample_uuid, client_uuid,
+            url = 'http://172.20.10.5/api/sample/{}/{}/{}/{}/{}/{}/{}/{}'.format(sample_uuid, client_uuid,
                                                                         contact_uuid, contact_uuid_polling_list,
                                                                               EnvironmentalConditions, None, type, PID)
             print(url)
@@ -448,7 +448,7 @@ def update_sample_result():
             client_uuid = df_export.loc[i, "Client_uuid"]
             sample_uuid = df_export.loc[i, "Sample_uuid"]
             clientReference = df_export.loc[i, "Machine"] + ',' + df_export.loc[i, "result"]
-            url = 'http://192.168.11.21/api/sample/{}/{}/{}/{}'.format(client_uuid, sample_uuid, None, clientReference)
+            url = 'http://172.20.10.5/api/sample/{}/{}/{}/{}'.format(client_uuid, sample_uuid, None, clientReference)
             print(url)
             result = requests.put(url, cookies=reslogin.cookies, headers=headers)
             print(result.json())
@@ -679,7 +679,7 @@ def reserve_sample():
                 name = value
             elif ''.join(key) == "ClientID":
                 client = value
-        url = 'http://192.168.11.21/api/client/{}/{}'.format(name, client)
+        url = 'http://172.20.10.5/api/client/{}/{}'.format(name, client)
         print(url)
         result = requests.post(url, cookies=reslogin.cookies, headers=headers)
         # print(result.json())
@@ -720,7 +720,7 @@ def reserve_sample():
                 clientID = value
                 df_filter = df_clientID.ClientID == clientID
                 client_seq = df_clientID[df_filter.squeeze()]["Client_seq"].values[0]
-                url = 'http://192.168.11.21/api/contact/{}/{}/{}/{}/{}/{}'.format(client_seq, name, sex, contactID, phone, email)
+                url = 'http://172.20.10.5/api/contact/{}/{}/{}/{}/{}/{}'.format(client_seq, name, sex, contactID, phone, email)
                 print(url)
                 result = requests.post(url, cookies=reslogin.cookies, headers=headers)
                 contact_uuid = result.json()["items"][0]["uid"]
@@ -739,8 +739,8 @@ def reserve_sample():
     for i in df_export.index:
         client_uuid = df_export.loc[i, "Client_uuid"]
         contact_uuid = df_export.loc[i, "Contact_uuid"]
-        url = 'http://192.168.11.21/api/sample/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contact_uuid,
-                                                                             '72ee86eeed68455fbcbf05ce7d7e1d8a', None,
+        url = 'http://172.20.10.5/api/sample/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contact_uuid,
+                                                                             'da509dcb5c6a4ea8a0774c6f83ece70f', None,
                                                                              None, None,
                                                                              None)
         print(url)
@@ -783,7 +783,7 @@ def reserve_sample_report():
                 name = value
             elif ''.join(key) == "ClientID":
                 clientID = str(value)
-        url = 'http://192.168.11.21/api/client/{}/{}'.format(name, clientID)
+        url = 'http://172.20.10.5/api/client/{}/{}'.format(name, clientID)
         print(url)
         result = requests.post(url, cookies=reslogin.cookies, headers=headers)
         print(result.json())
@@ -837,7 +837,7 @@ def reserve_sample_report():
                 birthday = value
                 # df_filter = df_clientID.ClientID == clientID
                 # client_seq = df_clientID[df_filter.squeeze()]["Client_seq"].values[0]
-                url = 'http://192.168.11.21/api/contactReport/{}/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contactID, name, sex, age, birthday, clientName, phone)
+                url = 'http://172.20.10.5/api/contactReport/{}/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contactID, name, sex, age, birthday, clientName, phone)
                 print(url)
                 result = requests.post(url, cookies=reslogin.cookies, headers=headers)
                 print(result.json())
@@ -859,8 +859,8 @@ def reserve_sample_report():
     for i in df_export.index:
         client_uuid = df_export.loc[i, "Client_uuid"]
         contact_uuid = df_export.loc[i, "Contact_uuid"]
-        url = 'http://192.168.11.21/api/sample/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contact_uuid,
-                                                                             '72ee86eeed68455fbcbf05ce7d7e1d8a', None,
+        url = 'http://172.20.10.5/api/sample/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contact_uuid,
+                                                                             'da509dcb5c6a4ea8a0774c6f83ece70f', None,
                                                                              None, None,
                                                                              None)
         print(url)
@@ -908,7 +908,7 @@ def report_sample_chao():
     #             name = value
     #         elif ''.join(key) == "ClientID":
     #             clientID = str(value)
-    #     url = 'http://192.168.11.21/api/client/{}/{}'.format(name, clientID)
+    #     url = 'http://172.20.10.5/api/client/{}/{}'.format(name, clientID)
     #     print(url)
     #     result = requests.post(url, cookies=reslogin.cookies, headers=headers)
     #     print(result.json())
@@ -962,7 +962,7 @@ def report_sample_chao():
     #             birthday = value
     #             # df_filter = df_clientID.ClientID == clientID
     #             # client_seq = df_clientID[df_filter.squeeze()]["Client_seq"].values[0]
-    #             url = 'http://192.168.11.21/api/contactReport/{}/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contactID,
+    #             url = 'http://172.20.10.5/api/contactReport/{}/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contactID,
     #                                                                                            name, sex, age, birthday,
     #                                                                                            clientName, phone)
     #             print(url)
@@ -986,8 +986,8 @@ def report_sample_chao():
     # for i in df_export.index:
     #     client_uuid = df_export.loc[i, "Client_uuid"]
     #     contact_uuid = df_export.loc[i, "Contact_uuid"]
-    #     url = 'http://192.168.11.21/api/sample/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contact_uuid,
-    #                                                                          '72ee86eeed68455fbcbf05ce7d7e1d8a', None,
+    #     url = 'http://172.20.10.5/api/sample/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contact_uuid,
+    #                                                                          'da509dcb5c6a4ea8a0774c6f83ece70f', None,
     #                                                                          None, None,
     #                                                                          None)
     #     print(url)
@@ -1033,7 +1033,7 @@ def nonreserve_sample():
     for i in df_checkID.index:
         if df_checkID.loc[i] == False and i in df_import.ClientID.drop_duplicates().index.tolist():
             import_dict = df_import.loc[i].to_dict()
-            url = 'http://192.168.11.21/api/client/{}/{}'.format(import_dict["Client_Name"], import_dict["ClientID"])
+            url = 'http://172.20.10.5/api/client/{}/{}'.format(import_dict["Client_Name"], import_dict["ClientID"])
             print(url)
             result = requests.post(url, cookies=reslogin.cookies, headers=headers)
             print(result.json())
@@ -1055,7 +1055,7 @@ def nonreserve_sample():
                 phone = import_dict["Phone"]
                 email = import_dict["Email"]
                 client_uuid = df_id.Client_uuid[df_id.ClientID == import_dict["ClientID"]].tolist()[0]
-                url = 'http://192.168.11.21/api/contact/{}/{}/{}/{}/{}/{}'.format(client_uuid, name, sex, contactID,
+                url = 'http://172.20.10.5/api/contact/{}/{}/{}/{}/{}/{}'.format(client_uuid, name, sex, contactID,
                                                                                    phone, email)
                 print(url)
                 result = requests.post(url, cookies=reslogin.cookies, headers=headers)
@@ -1107,7 +1107,7 @@ def nonreserve_sample():
                 df_filter = df_clientID.ClientID == clientID
                 print(df_filter)
                 Client_uuid = df_clientID[df_filter]["Client_uuid"].values[0]
-                url = 'http://192.168.11.21/api/contact/{}/{}/{}/{}/{}/{}'.format(Client_uuid, name, sex, contactID,
+                url = 'http://172.20.10.5/api/contact/{}/{}/{}/{}/{}/{}'.format(Client_uuid, name, sex, contactID,
                                                                                    phone, email)
                 print(url)
                 result = requests.post(url, cookies=reslogin.cookies, headers=headers)
@@ -1136,8 +1136,8 @@ def nonreserve_sample():
         contact_uuid = df_export.loc[i, "Contact_uuid"]
         print(client_uuid)
         print(contact_uuid)
-        url = 'http://192.168.11.21/api/sample/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contact_uuid,
-                                                                             '72ee86eeed68455fbcbf05ce7d7e1d8a', None,
+        url = 'http://172.20.10.5/api/sample/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contact_uuid,
+                                                                             'da509dcb5c6a4ea8a0774c6f83ece70f', None,
                                                                              None, None,
                                                                              None)
         print(url)
@@ -1179,7 +1179,7 @@ def nonreserve_sample_report():
         # not exsit and not duplicate
         if df_checkID.loc[i] == False and i in df_import.ClientName.drop_duplicates().index.tolist():
             import_dict = df_import.loc[i].to_dict()
-            url = 'http://192.168.11.21/api/client/{}/{}'.format(import_dict["ClientName"], None)
+            url = 'http://172.20.10.5/api/client/{}/{}'.format(import_dict["ClientName"], None)
             print(url)
             result = requests.post(url, cookies=reslogin.cookies, headers=headers)
             print(result.json())
@@ -1200,7 +1200,7 @@ def nonreserve_sample_report():
                 clientName = import_dict["ClientName"]
                 client_uuid = df_id.Client_uuid[df_id.ClientName == clientName].tolist()[0]
                 # email = import_dict["Email"]
-                url = 'http://192.168.11.21/api/contactReport/{}/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contactID,
+                url = 'http://172.20.10.5/api/contactReport/{}/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contactID,
                                                                                                name, sex, age, birthday,
                                                                                                clientName, phone)
 
@@ -1259,7 +1259,7 @@ def nonreserve_sample_report():
                 # df_filter = df_clientName.ClientName == clientName
                 # print(df_filter)
                 # client_seq = df_clientName[df_filter]["Client_seq"].values[0]
-                url = 'http://192.168.11.21/api/contactReport/{}/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contactID,
+                url = 'http://172.20.10.5/api/contactReport/{}/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contactID,
                                                                                                name, sex, age, birthday,
                                                                                                clientName, phone)
                 print(url)
@@ -1289,8 +1289,8 @@ def nonreserve_sample_report():
         contact_uuid = df_export.loc[i, "Contact_uuid"]
         print(client_uuid)
         print(contact_uuid)
-        url = 'http://192.168.11.21/api/sample/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contact_uuid,
-                                                                             '72ee86eeed68455fbcbf05ce7d7e1d8a', None,
+        url = 'http://172.20.10.5/api/sample/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contact_uuid,
+                                                                             'da509dcb5c6a4ea8a0774c6f83ece70f', None,
                                                                              None, None,
                                                                              None)
         print(url)
@@ -1333,7 +1333,7 @@ def cust_data_polling():
         # not exsit and not duplicate
         if df_checkID.loc[i] == False and i in df_import.ClientName.drop_duplicates().index.tolist():
             import_dict = df_import.loc[i].to_dict()
-            url = 'http://192.168.11.21/api/client/{}/{}'.format(import_dict["ClientName"], None)
+            url = 'http://172.20.10.5/api/client/{}/{}'.format(import_dict["ClientName"], None)
             print(url)
             result = requests.post(url, cookies=reslogin.cookies, headers=headers)
             print(result.json())
@@ -1354,7 +1354,7 @@ def cust_data_polling():
                 clientName = import_dict["ClientName"]
                 client_uuid = df_id.Client_uuid[df_id.ClientName == clientName].tolist()[0]
                 # email = import_dict["Email"]
-                url = 'http://192.168.11.21/api/contactReport/{}/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contactID,
+                url = 'http://172.20.10.5/api/contactReport/{}/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contactID,
                                                                                                name, sex, age, birthday,
                                                                                                clientName, phone)
 
@@ -1413,7 +1413,7 @@ def cust_data_polling():
                 # df_filter = df_clientName.ClientName == clientName
                 # print(df_filter)
                 # client_seq = df_clientName[df_filter]["Client_seq"].values[0]
-                url = 'http://192.168.11.21/api/contactReport/{}/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contactID,
+                url = 'http://172.20.10.5/api/contactReport/{}/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contactID,
                                                                                                name, sex, age, birthday,
                                                                                                clientName, phone)
                 print(url)
@@ -1449,8 +1449,8 @@ def cust_data_polling():
         print(client_uuid)
         print(contact_uuid)
         contact_uuid_polling_list = df_export.loc[df_export.PID == df_export.loc[i].PID, ['Contact_uuid']].values.ravel().tolist()
-        url = 'http://192.168.11.21/api/sample/{}/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, "b54dcd097d1844578dd333219f4b0ff6",
-                                                                             '72ee86eeed68455fbcbf05ce7d7e1d8a', None,
+        url = 'http://172.20.10.5/api/sample/{}/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, "b54dcd097d1844578dd333219f4b0ff6",
+                                                                             'da509dcb5c6a4ea8a0774c6f83ece70f', None,
                                                                              None, True,
                                                                              None, contact_uuid_polling_list)
         print(url)
@@ -1623,7 +1623,7 @@ def sample_update():
     df_batchID = pd.DataFrame()
     for i in df_import.BatchID.drop_duplicates().index:
         print(df_import.iloc[i]["BatchID"], df_import.iloc[i]["收件日期"])
-        url = 'http://192.168.11.21/api/batch/{}/{}/{}/{}/{}/{}'.format(df_import.iloc[i]["Client_uuid"], df_import.iloc[i]["BatchID"], None,
+        url = 'http://172.20.10.5/api/batch/{}/{}/{}/{}/{}/{}'.format(df_import.iloc[i]["Client_uuid"], df_import.iloc[i]["BatchID"], None,
                                                                   None, df_import.iloc[i]["收件日期"], None)
         print(url)
         result = requests.post(url, cookies=reslogin.cookies, headers=headers)
@@ -1641,7 +1641,7 @@ def sample_update():
 
     # Update samples
     for i in df_merge.index:
-        url = 'http://192.168.11.21/api/sample/{}/{}/{}/{}/{}'.format(df_merge.iloc[i]["Client_uuid"],df_merge.iloc[i]["Sample_uuid"], df_merge.iloc[i]["收件日期"], None, df_merge.iloc[i]["Batch_uuid"])
+        url = 'http://172.20.10.5/api/sample/{}/{}/{}/{}/{}'.format(df_merge.iloc[i]["Client_uuid"],df_merge.iloc[i]["Sample_uuid"], df_merge.iloc[i]["收件日期"], None, df_merge.iloc[i]["Batch_uuid"])
         print(url)
         result = requests.put(url, cookies=reslogin.cookies, headers=headers)
         print(result.json())
@@ -1660,7 +1660,7 @@ def sample_update_new():
     df_batchID = pd.DataFrame()
     for i in df_import.BatchID.drop_duplicates().index:
         print(df_import.iloc[i]["BatchID"], df_import.iloc[i]["收件日期"])
-        url = 'http://192.168.11.21/api/batch/{}/{}/{}/{}/{}/{}'.format(df_import.iloc[i]["Client_uuid"], df_import.iloc[i]["BatchID"], None,
+        url = 'http://172.20.10.5/api/batch/{}/{}/{}/{}/{}/{}'.format(df_import.iloc[i]["Client_uuid"], df_import.iloc[i]["BatchID"], None,
                                                                   None, df_import.iloc[i]["收件日期"], None)
         print(url)
         result = requests.post(url, cookies=reslogin.cookies, headers=headers)
@@ -1679,7 +1679,7 @@ def sample_update_new():
 
     # Update samples
     for i in df_merge.index:
-        url = 'http://192.168.11.21/api/sample/{}/{}/{}/{}/{}'.format(df_merge.iloc[i]["Client_uuid"],df_merge.iloc[i]["Sample_uuid"], df_merge.iloc[i]["Receive_date"], None, df_merge.iloc[i]["Batch_uuid"])
+        url = 'http://172.20.10.5/api/sample/{}/{}/{}/{}/{}'.format(df_merge.iloc[i]["Client_uuid"],df_merge.iloc[i]["Sample_uuid"], df_merge.iloc[i]["Receive_date"], None, df_merge.iloc[i]["Batch_uuid"])
         print(url)
         result = requests.put(url, cookies=reslogin.cookies, headers=headers)
         print(result.json())
@@ -2133,7 +2133,7 @@ def create_client():
                 name = value
             elif ''.join(key)=="ClientID":
                 client = value
-        url = 'http://192.168.11.21/api/client/{}/{}'.format(name,client)
+        url = 'http://172.20.10.5/api/client/{}/{}'.format(name,client)
         print(url)
         result = requests.post(url, cookies=reslogin.cookies, headers=headers)
         print(result)
@@ -2168,7 +2168,7 @@ def create_contact(df, df_clientID):
                 print(df_filter)
                 client_seq = df_clientID[df_filter]["Client_seq"].values[0]
                 print(client_seq)
-                url = 'http://192.168.11.21/api/contact/{}/{}/{}/{}/{}/{}'.format(client_seq, name, sex, contactID,
+                url = 'http://172.20.10.5/api/contact/{}/{}/{}/{}/{}/{}'.format(client_seq, name, sex, contactID,
                                                                                    phone, email)
                 print(url)
                 result = requests.post(url, cookies=reslogin.cookies, headers=headers)
@@ -2193,8 +2193,8 @@ def create_sample(df_export):
     for i in df_export.index:
         client_uuid = df_export.loc[i, "Client_uuid"]
         contact_uuid = df_export.loc[i, "Contact_uuid"]
-        url = 'http://192.168.11.21/api/sample/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contact_uuid,
-                                                                             '72ee86eeed68455fbcbf05ce7d7e1d8a', None,
+        url = 'http://172.20.10.5/api/sample/{}/{}/{}/{}/{}/{}/{}'.format(client_uuid, contact_uuid,
+                                                                             'da509dcb5c6a4ea8a0774c6f83ece70f', None,
                                                                              None, None,
                                                                              None)
         print(url)
@@ -2266,7 +2266,7 @@ def import_machine():
             elif ''.join(key) == "sampler":
                 clientsampleID = value
 
-        url = 'http://192.168.11.21/api/sample/{}/{}/{}/{}/{}/{}/{}'.format('4e22a544d58642dabbc8b55b2b087a12', contact_id, target_id, dateSample, CT, clientordernumber, clientsampleID)
+        url = 'http://172.20.10.5/api/sample/{}/{}/{}/{}/{}/{}/{}'.format('4e22a544d58642dabbc8b55b2b087a12', contact_id, target_id, dateSample, CT, clientordernumber, clientsampleID)
         print(url)
         result = requests.post(url, cookies=reslogin.cookies, headers=headers)
         print(result)
@@ -2489,7 +2489,7 @@ def secondtype_report_lan_test():
 
 
 def load_sql(uid):
-    url = 'http://192.168.11.21/api/{}'.format(uid)
+    url = 'http://172.20.10.5/api/{}'.format(uid)
     result = requests.get(url, cookies=reslogin.cookies, headers=headers)
     print(result.json())
     return result.json()
