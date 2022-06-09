@@ -108,9 +108,9 @@
                 <p class="selectAll">Select All</p>
         </div>
         <form method= "post" class="search" action="/back_stage/singleReport/">
+            {% csrf_token %}
             <input type="text" name="q" required>
             <input type="submit" class="searchbutton" value="轉換">
-            {% csrf_token %}
         </form>
         <div class="table" >
             <table style="border:0px #FFD382 groove;" cellpadding="10" border='1'>
@@ -118,14 +118,14 @@
                     <th>Choose</th>
                     <th>BatchID</th>
                 </tr>
-                <form name="data" method="post" action="http://172.20.10.5/back_stage/singleReport/">
-                    {% csrf_token %}
+                <form name="data" method="post" action="/back_stage/singleReport/">
                     {% for result in data.batch %}
                     <tr align="center">
                         <td><input type="checkbox" class="checkbox-list" name="batchID" value="{{ result }}"></td>
                         <td>{{ result }}</td>
                     </tr>
                     {% endfor %}
+                    {% csrf_token %}
             </table>
             <input type="submit" class="submitbutton" value="送出"/>
             </form>

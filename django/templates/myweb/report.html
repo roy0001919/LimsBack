@@ -125,7 +125,7 @@
                     <th>Sample_id</th>
                     <th>ClientName</th>
                 </tr>
-                <form name="data" method="post" action="http://172.20.10.5/back_stage/">
+                <form name="data" method="post" action="/back_stage/">
                     {% for item in data %}
                     <tr align="center">
                         <td><input type="checkbox" class="checkbox-list" name="{{ item.Name }}" value=["{{ item.Contact_uuid }}","{{ item.Sample_uuid }}"]></td>
